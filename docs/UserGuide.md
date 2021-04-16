@@ -304,7 +304,7 @@ Other Examples:
 
 ### Mark a task as done : `done`
 
-Mark an existing task as done. Done tasks are coloured green.
+Mark an existing task as done. For colour coding, refer to [Features](#Features).
 
 Application: Used to indicate task is completed and does not need any attention at the moment.
 
@@ -330,7 +330,7 @@ Other Examples:
 
 ### Mark a task as not done : `notdone`
 
-Mark an existing task as not done. Not done tasks are coloured pink.
+Mark an existing task as not done. For colour coding, refer to [Features](#Features).
 
 Application: Used to indicate task may need to be re-attempted.
 
