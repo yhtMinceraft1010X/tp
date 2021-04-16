@@ -25,7 +25,7 @@ on ModuleBook3.5.
 
 1. Once the jar file is ready, simply double-click the file in the download section.
 
-1. Read through the [Features](#Features) section and [Command Notes](#Command Notes) to understand how the application should be used.
+1. Read through the [Features](#features) section and [Command Notes](#command-notes) to understand how the application should be used.
 
 1. Go through the tutorial in the given order. Simply look out for blue boxes with a bulb icon and titled "Tutorial Example:", 
    such as the one below.
@@ -177,7 +177,7 @@ t/ | TAG |
   e.g. if the command specifies `d/DESCRIPTION t/TAG`, `t/TAG d/DESCRIPTION` is also acceptable.
 
 * If a parameter is expected only once in the command but you specified it multiple times,
-  only the last occurrence of the parameter will be taken. Please refer to [Duplicate Parameters](#Duplicate Parameters).<br>
+  only the last occurrence of the parameter will be taken. Please refer to [Duplicate Parameters](#duplicate-parameters).<br>
   e.g. if you specify `d/CS2103T team project for week7 d/CS3243 Assignment 4`, only `d/CS3243 Assignment 4` will be taken.
 
 * Extraneous parameters for commands that do not take in parameters (such as`list`) will be ignored.<br>
@@ -304,7 +304,7 @@ Other Examples:
 
 ### Mark a task as done : `done`
 
-Mark an existing task as done. For colour coding, refer to [Features](#Features).
+Mark an existing task as done. For colour coding, refer to [Features](#features).
 
 Application: Used to indicate task is completed and does not need any attention at the moment.
 
@@ -330,7 +330,7 @@ Other Examples:
 
 ### Mark a task as not done : `notdone`
 
-Mark an existing task as not done. For colour coding, refer to [Features](#Features).
+Mark an existing task as not done. For colour coding, refer to [Features](#features).
 
 Application: Used to indicate task may need to be re-attempted.
 
