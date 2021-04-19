@@ -673,10 +673,10 @@ Action | Format, Examples
 **add** | `add n/TASK NAME m/MODULE d/DESCRIPTION [a/START TIME] b/DEADLINE w/WORKLOAD [r/RECURRENCE] [t/TAG]…​` <br> e.g. `add n/TP m/CS2103T d/Team tasks b/2021-01-20 20:00 w/3 t/tagname`
 **delete** | `delete INDEX`<br> e.g. `delete 3`
 **clear** | `clear`
-**deleteTag** | `deleteTag INDEX [t/TAG NAME]`<br> e.g. `delete 3 [t/SoftwareEng]`
+**deleteTag** | `deleteTag INDEX [t/TAG NAME]`<br> e.g. `delete 3 t/SoftwareEng`
 **done** | `done INDEX`<br> e.g. `done 1`
 **notdone** | `notdone INDEX`<br> e.g. `notdone 1`
-**tag** | `tag INDEX [t/TAG NAME]`<br> e.g. `tag 1 [t/SoftwareEng]`
+**tag** | `tag INDEX [t/TAG NAME]`<br> e.g. `tag 1 t/SoftwareEng`
 **find** | `find KEYWORD`<br> e.g. `find Assignment`
 **findTag** | `findTag KEYWORD`<br> e.g. `find Assignment`
 **mod** | `mod MODULE`<br> e.g. `mod CS2103T`
