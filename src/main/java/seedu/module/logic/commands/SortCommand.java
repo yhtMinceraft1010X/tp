@@ -72,8 +72,10 @@ public class SortCommand extends Command {
                 && ((SortCommand) other).factor instanceof Task.DescriptionComparator;
             boolean isSortedByNumberOfTag = this.factor instanceof Task.TagComparator
                 && ((SortCommand) other).factor instanceof Task.TagComparator;
+            boolean isSortedByDoneStatus = this.factor instanceof Task.DoneStatusComparator
+                && ((SortCommand) other).factor instanceof Task.DoneStatusComparator;
             return isSortedByDeadline || isSortedByDescription || isSortedByModule || isSortedByNumberOfTag
-                || isSortedByTaskName || isSortedByWorkload;
+                || isSortedByTaskName || isSortedByWorkload || isSortedByDoneStatus;
         }
     }
 }
