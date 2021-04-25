@@ -29,11 +29,11 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/se-edu/modulebook-level3/tree/master/docs/diagrams/) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams in this document can be found in the [diagrams](https://github.com/AY2021S2-CS2103T-T13-2/tp/tree/master/docs/diagrams) folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 
 </div>
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/Main.java) and [`MainApp`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/MainApp.java). It is responsible for,
+**`Main`** has two classes called [`Main`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/Main.java) and [`MainApp`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/MainApp.java). It is responsible for,
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
@@ -70,7 +70,7 @@ The sections below give more details of each component.
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 **API** :
-[`Ui.java`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/ui/Ui.java)
+[`Ui.java`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/ui/Ui.java)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
@@ -86,7 +86,7 @@ The `UI` component,
 ![Structure of the Logic Component](images/LogicClassDiagram.png)
 
 **API** :
-[`Logic.java`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/logic/Logic.java)
+[`Logic.java`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/logic/Logic.java)
 
 1. `Logic` uses the `ModuleBookParser` class to parse the user command.
 1. This results in a `Command` object which is executed by the `LogicManager`.
@@ -97,6 +97,10 @@ The `UI` component,
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("mod CS2103T")` API call.
+
+![Interactions Inside the Logic Component for the `mod CS2103T` Command](images/FindModuleSequenceDiagram.png)
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("sort /w")` API call.
 
@@ -111,7 +115,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 
 ![Structure of the Model Component](images/ModelClassDiagram.png)
 
-**API** : [`Model.java`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/model/Model.java)
 
 The `Model`,
 
@@ -121,17 +125,11 @@ The `Model`,
 * does not depend on any of the other three components.
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `ModuleBook`, which `Task` references. This allows `ModuleBook` to only require one `Tag` object per unique `Tag`, instead of each `Task` needing their own `Tag` object.<br>
-![BetterModelClassDiagram](images/BetterModelClassDiagram.png)
-
-</div>
-
-
 ### Storage component
 
 ![Structure of the Storage Component](images/StorageClassDiagram.png)
 
-**API** : [`Storage.java`](https://github.com/se-edu/modulebook-level3/tree/master/src/main/java/seedu/module/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2021S2-CS2103T-T13-2/tp/blob/master/src/main/java/seedu/module/storage/Storage.java)
 
 The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
@@ -168,7 +166,6 @@ Step 2. The user executes `done 5` command to mark the 5th task in the module bo
 ![DoneNotdoneState1](images/DoneNotdoneState1.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If the done command fails its execution, it will not call `Task#setDoneStatus(task, doneStatus)`, so the modified copy of the task will not be saved into the `tasks` list.
-
 </div>
 
 The following sequence diagram shows how the done operation works:
@@ -186,6 +183,65 @@ The following activity diagram summarizes what happens when a user executes done
 The notdone mechanism is similar to that of the done mechanism, except that the modified copy of the task is set as not done instead.
 
 <div style="page-break-after: always;"></div>
+
+
+### Recur feature
+
+#### Implementation
+
+The recur feature makes a task repeat at regular intervals. Internally, a Task has an attribute `Recurrence` that is an optional field.
+
+Recurrence of a task can either be daily, weekly or biweekly.
+
+Additionally, the recurrence of a task can also be removed using the `recur` feature.
+
+The `recurrence` of a task can also be added and removed using the `edit` feature. 
+
+e.g. `edit 1 r/daily`
+
+For a recurring task, once the recurrence to a task is added, the `deadline` of the task will change according to the recurrence
+and the task will be marked as `notdone` once the task recurs.
+
+The following activity diagram summarizes what happens upon execution of the `recur` feature.
+
+![RecurActivityDiagram](images/RecurActivityDiagram.png)
+
+The following sequence diagram shows how the `recur` feature works.
+
+![RecurCommandActivityDiagram](images/RecurCommandSequenceDiagram.png)
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `RecurCommand` and `RecurCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+
+</div>
+
+### Workload Distribution feature
+
+#### Implementation
+
+The workload distribution feature is implemented by `ModuleManager`. It uses HashMap and an OberservableList to monitor the workload of each module and PieChart in javaFX to visualizes it. More explicitly, it is implemented by 4 HashMaps using Module as key. The first three maps are used in the ModuleList while the map of weighted sum is used in the PieChart.
+
+* `moduleLowWorkLoadDistribution` - the value corresponds to the number of tasks with low workload.
+* `moduleMediumWorkLoadDistribution` - the value corresponds to the number of tasks with medium workload.
+* `moduleHighWorkLoadDistribution` - the value corresponds to the number of tasks with high workload.
+
+* `moduleWorkLoadDistribution` - the value corresponds to the weighted sum of workload where low workload is counted as 1, medium workload is counted as 2, high workload is counted as 3.
+
+It also implements following method:
+
+* `increaseCorrectWorkloadDistribution(Module module, Task task)` —  Based on the workload of the task, increases the value of corresponding map and the `moduleWorkloadDistribution`.
+
+* `decreaseCorrectWorkloadDistribution(Module module, Task task)` —  Based on the workload of the task, decreases the value of corresponding map and the `moduleWorkloadDistribution`.
+
+The following class diagram shows the classes related to implementing workload distribution:
+
+![WorkloadDistributionDiagram](images/WorkloadDistributionClassDiagram.png)
+
+<div style="page-break-after: always;"></div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> a39930683a3c4e47505478a14d57d4e8feb0d246
 
 ### \[Proposed\] Undo/redo feature
 
@@ -307,15 +363,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | student                                    | delete a task from the list                   | remove the tasks I have completed or don't want anymore                           |
 | `* *`    | meticulous student                         | mark a task as done                           | keep track of tasks that I have completed                                         |
 | `* *`    | student                                    | mark a task as undone                         | keep track of tasks that I've yet to complete or need to make edits to            |
-| `*`      | student                                    | tag tasks                                     | filter through my tasks easily and focus on the similar ones with the same tags   |
-| `*`      | user with many tasks in the module book    | modify the deadline without deleting the task | waste less time recreating the whole task                                         |
+| `*`      | meticulous student                         | tag tasks                                     | filter through my tasks easily and focus on the similar ones with the same tags   |
 | `*`      | user with many tasks in the module book    | modify the deadline without deleting the task | waste less time recreating the whole task     
+| `*`      | user with many tasks in the module book    | search for tasks by their name                | find the task quickly from the large list
+| `*`      | user with many tasks in the module book    | search for tasks by module code               | list down all the tasks from the same module clearly
 | `*`      | user with many tasks in the module book    | sort the tasks by deadline                    | see which tasks need to be addressed as soon as possible
 | `*`      | user with many tasks in the module book    | sort the tasks by workload                    | see which tasks require more effort to complete
 | `*`      | busy student                               | view workload count for each module           | decide which module requires more effort
 | `*`      | busy student                               | search for tags                               | locate my tasks easily                                                            |
 | `*`      | busy student                               | delete tags                                   | edit tags of my tasks without having to recreate them                             |
-| `*`      | busy student with many repeating tasks     | make a task repeat daily, monthly or weekly   | avoid keying in the same task daily or weekly or monthly                     |                              
+| `*`      | busy student with many repeating tasks     | make a task repeat daily, biweekly or weekly   | avoid keying in the same task daily or weekly or biweekly                     |                              
 
 <div style="page-break-after: always;"></div>
 
@@ -331,7 +388,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 2.  ModuleBook3.5 presents tasks in list form.
 
- **Extensions**
+**Extensions**
 * 2a. The list is empty.
     Use case ends.
     
@@ -398,33 +455,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User <ins>lists tasks (UC01)</ins>.
-
-2.  User requests to mark a task as not done.
-
-3.  ModuleBook3.5 marks the task as not done.
-
-    Use case ends.
+Same as <ins>Mark task as done (UC03)</ins>, except that task is marked as not done instead of done.
 
 **Extensions**
 
-* 2a. The list is empty.
+Same as extensions for <ins>Mark task as done (UC03)</ins>, but with one exception:
 
-    * 2a1. ModuleBook3.5 shows an error message.
-
-      Use case ends.
-    
-
-* 3a. The given index is out of range.
-
-    * 3a1. ModuleBook3.5 shows an error message.
-
-      Use case resumes at step 2.
-
-* 3b. The task at given index is not done yet.
+* 3b. The task at given index is already not done.
 
     * 3b1. ModuleBook3.5 shows a not done message.
-    
+
+      Use case resumes at step 2.
 
 **Use case 05: Add a task**
 
@@ -623,11 +664,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case ends.
       
       
-**Use case 12: Sorts tasks by Deadline**
+**Use case 12: Sorts tasks by a criterion**
 
 **MSS**
 
-1.  User request to sorts tasks by deadline.
+1.  User selects a criterion request to sorts tasks.
 
 2.  ModuleBook3.5 sorts the tasks in descending order of urgency and display them.
 
@@ -638,6 +679,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. Invalid format for the sort command.
 
     * 2a1. ModuleBook3.5 shows an error message with the correct format for sort and example.
+
+      Use case resumes at step 2.
+* 2b. User selects a wrong criterion.
+    * 2a1. ModuleBook3.5 shows an error message with the valid criterion for sort and example.
 
       Use case resumes at step 2.
     
@@ -661,7 +706,7 @@ Use case ends.
     
         Use case resumes at step 2.
 
-* 2b. The recurrence is not daily, weekly or monthly.
+* 2b. The recurrence is not daily, weekly or biweekly.
 
     * 2b1. No recurrence is entered. <ins>removes recurrence (UC14)<ins>
         
@@ -696,7 +741,7 @@ Use case ends.
 
 * 2b. The recurrence input is not empty.
 
-    * 2b1. The recurrence input is daily, monthly or weekly. <ins>add recurrence (UC13)<ins>
+    * 2b1. The recurrence input is daily, biweekly or weekly. <ins>add recurrence (UC13)<ins>
         
         Use case resumes at step 2.
         
@@ -705,15 +750,25 @@ Use case ends.
     * 2c1. ModuleBook3.5 shows an error message.
     
         Use case resumes at step 2.
+        
+**Use case 15: Refresh all tasks**
+
+**MSS**
+
+1.  User requests to refresh all tasks in the list.
+
+2.  ModuleBook3.5 refreshes all tasks in the list.
+
 <div style="page-break-after: always;"></div>
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
-2.  Should be able to hold up to 1000 tasks without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  The size of ModuleBook3.5 will not be larger than 20 MB.
-5.  The project is expected to adhere to a schedule that delivers a feature set every two weeks until the end of April.
+2.  Should work on any monitor which has a resolution greater than 1400 * 800.
+3.  Should be able to hold up to 1000 tasks without a noticeable sluggishness in performance for typical usage.
+4.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+5.  The size of ModuleBook3.5 will not be larger than 20 MB.
+6.  The project is expected to adhere to a schedule that delivers a feature set every two weeks until the end of April.
 
 ### Glossary
 
@@ -726,10 +781,8 @@ Use case ends.
 
 Given below are instructions to test the app manually.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</div>
+<div markdown="span" class="alert alert-info">:information_source:**Note:** These instructions only provide a starting point for testers to work on;
+testers are expected to do more *exploratory* testing.</div>
 
 ### Launch and shutdown
 
@@ -746,8 +799,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a task
 
 1. Deleting a task while all tasks are being shown
@@ -763,12 +814,11 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
-
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+   1. Delete `.\data\modulebook.json`<br>
+   
+   1. Re-launch the app by double-clicking the jar file.<br>
+      Expected: `.\data\modulebook.json` generated automatically with some example inside.

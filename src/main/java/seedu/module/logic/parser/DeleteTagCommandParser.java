@@ -2,13 +2,10 @@ package seedu.module.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_MODULE;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_NAME;
 
 import seedu.module.commons.core.index.Index;
+import seedu.module.commons.exceptions.IllegalIntegerException;
 import seedu.module.commons.exceptions.IllegalValueException;
 import seedu.module.logic.commands.Command;
 import seedu.module.logic.commands.DeleteTagCommand;
@@ -28,14 +25,15 @@ public class DeleteTagCommandParser implements Parser {
     @Override
     public Command parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK_NAME,
-                PREFIX_DEADLINE, PREFIX_MODULE, PREFIX_DESCRIPTION, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteTagCommand.MESSAGE_USAGE), ive);
+        } catch (IllegalIntegerException iie) {
+            throw new ParseException(iie.getMessage());
         }
 
         if (argMultimap.getValue(PREFIX_TAG).isEmpty()) {

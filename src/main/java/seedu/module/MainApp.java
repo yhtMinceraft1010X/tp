@@ -37,7 +37,7 @@ import seedu.module.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 3, 0, false);
+    public static final Version VERSION = new Version(1, 4, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -92,7 +92,10 @@ public class MainApp extends Application {
             initialData = new ModuleBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        Model resultModel = new ModelManager(initialData, userPrefs);
+        resultModel.refreshTasks();
+
+        return resultModel;
     }
 
     private void initLogging(Config config) {

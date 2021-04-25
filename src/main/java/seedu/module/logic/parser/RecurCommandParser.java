@@ -2,17 +2,13 @@ package seedu.module.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.module.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_MODULE;
 import static seedu.module.logic.parser.CliSyntax.PREFIX_RECURRENCE;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.module.logic.parser.CliSyntax.PREFIX_TASK_NAME;
 
 import java.util.Optional;
 
 import seedu.module.commons.core.index.Index;
 import seedu.module.commons.core.optionalfield.OptionalField;
+import seedu.module.commons.exceptions.IllegalIntegerException;
 import seedu.module.commons.exceptions.IllegalValueException;
 import seedu.module.logic.commands.Command;
 import seedu.module.logic.commands.RecurCommand;
@@ -22,14 +18,13 @@ import seedu.module.model.task.Recurrence;
 
 public class RecurCommandParser implements Parser<Command> {
 
-    private static final String RECUR_EXCEPTION_MESSAGE = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    public static final String RECUR_EXCEPTION_MESSAGE = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             RecurCommand.MESSAGE_USAGE);
 
     @Override
     public Command parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK_NAME,
-                PREFIX_DEADLINE, PREFIX_MODULE, PREFIX_DESCRIPTION, PREFIX_RECURRENCE, PREFIX_TAG);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_RECURRENCE);
 
         Index index;
         RecurCommand recurCommand;
@@ -39,6 +34,8 @@ public class RecurCommandParser implements Parser<Command> {
             recurCommand = new RecurCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(RECUR_EXCEPTION_MESSAGE, ive);
+        } catch (IllegalIntegerException iie) {
+            throw new ParseException(iie.getMessage());
         }
 
         String recurValue;

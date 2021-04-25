@@ -43,8 +43,9 @@ public class CommandTestUtil {
     public static final String VALID_TAG_PRIORITY_LOW = "priorityLow";
     public static final String VALID_WORKLOAD_1 = "1";
     public static final String VALID_WORKLOAD_2 = "2";
-    public static final String VALID_RECURRENCE_LAB = "monthly";
+    public static final String VALID_RECURRENCE_LAB = "daily";
     public static final String VALID_RECURRENCE_PRACTICAL = "weekly";
+    public static final String VALID_RECURRENCE_MIDTERM = "biweekly";
 
     public static final String TASK_NAME_DESC_LAB = " " + PREFIX_TASK_NAME + VALID_TASK_NAME_LAB;
     public static final String TASK_NAME_DESC_PRACTICAL = " " + PREFIX_TASK_NAME + VALID_TASK_NAME_PRACTICAL;
@@ -69,7 +70,7 @@ public class CommandTestUtil {
     public static final String INVALID_MODULE_DESC = " " + PREFIX_MODULE + "CS!2040"; // ! not allowed in modules
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION; // descriptions should not be empty
     public static final String INVALID_WORKLOAD_DESC = " " + PREFIX_WORKLOAD + "4"; // workload should be in range 1-3
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "quiz*"; // '*' not allowed in tags
     public static final String INVALID_RECURRENCE_DESC = " " + PREFIX_RECURRENCE + "hourly"; // cant recur hourly
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

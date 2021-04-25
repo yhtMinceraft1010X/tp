@@ -24,8 +24,10 @@ public class ModuleManager {
     private static HashMap<Module, Integer> moduleMediumWorkLoadDistribution;
     private static HashMap<Module, Integer> moduleHighWorkLoadDistribution;
     private static List<String> supportedModulesInStr;
-    private static final String[] arrOfModules = {"CS1101S", "CS1231S", "CS2030", "CS2040S", "CS2101",
-        "CS2103T", "CS2105", "CS2106", "CS3230", "CS3243", "CS3244", "IS1103", "ST2131"};
+    private static final String[] arrOfModules = {"CS1010S", "CS1101S", "CS1231S",
+        "CS2030", "CS2040S", "CS2101", "CS2102", "CS2103T", "CS2105", "CS2106", "CS3103",
+        "CS3210", "CS3212", "CS3217", "CS3219", "CS3220", "CS3221", "CS3223", "CS3225",
+        "CS3230", "CS3231", "CS3233", "CS3243", "CS3244", "IS1103", "ST2131"};
     private static final int LOW_LEVEL = 1;
     private static final int MEDIUM_LEVEL = 2;
     private static final int HIGH_LEVEL = 3;
@@ -68,6 +70,13 @@ public class ModuleManager {
         if (mappingOfModulesToTasks == null) {
             rebuildMapping();
         }
+        insertTaskInternal(module, task);
+        increaseCorrectWorkloadDistribution(module, task);
+        setExistingModuleList();
+        setModulePieChartData();
+    }
+
+    private static void insertTaskInternal(Module module, Task task) {
         if (mappingOfModulesToTasks.containsKey(module)) {
             List<Task> newList = mappingOfModulesToTasks.get(module);
             //must ensure Module exists in the listOfValidModules
@@ -77,11 +86,7 @@ public class ModuleManager {
             List<Task> newList = new ArrayList<>();
             newList.add(task);
             mappingOfModulesToTasks.put(module, newList);
-            moduleWorkLoadDistribution.put(module, task.getWorkload().getWorkloadLevel());
         }
-        increaseCorrectWorkloadDistribution(module, task);
-        setExistingModuleList();
-        setModulePieChartData();
     }
 
     /**
@@ -93,7 +98,7 @@ public class ModuleManager {
     public static void increaseCorrectWorkloadDistribution(Module module, Task task) {
         int workloadLevel = task.getWorkload().getWorkloadLevel();
         moduleWorkLoadDistribution.put(module,
-            moduleWorkLoadDistribution.get(module) + workloadLevel);
+            moduleWorkLoadDistribution.getOrDefault(module, 0) + workloadLevel);
         switch(workloadLevel) {
         case LOW_LEVEL:
             moduleLowWorkLoadDistribution.put(module,
@@ -120,6 +125,8 @@ public class ModuleManager {
      */
     public static void decreaseCorrectWorkloadDistribution(Module module, Task task) {
         int workloadLevel = task.getWorkload().getWorkloadLevel();
+        moduleWorkLoadDistribution.put(module,
+                moduleWorkLoadDistribution.get(module) - task.getWorkload().getWorkloadLevel());
         switch(workloadLevel) {
         case LOW_LEVEL:
             moduleLowWorkLoadDistribution.put(module,
@@ -145,9 +152,9 @@ public class ModuleManager {
      * @return return the workload information of one module.
      */
     public static String getModuleWorkloadInformation(Module module) {
-        String moduleWorkLoadInformation = String.format("low workload tasks:%d\n"
-                + "medium workload tasks:%d\n"
-                + "high workload tasks:%d\n",
+        String moduleWorkLoadInformation = String.format("low workload tasks: %d\n"
+                + "medium workload tasks: %d\n"
+                + "high workload tasks: %d\n",
             moduleLowWorkLoadDistribution.getOrDefault(module, 0),
             moduleMediumWorkLoadDistribution.getOrDefault(module, 0),
             moduleHighWorkLoadDistribution.getOrDefault(module, 0));
@@ -168,16 +175,18 @@ public class ModuleManager {
         List<Task> newList = mappingOfModulesToTasks.get(module);
         //must ensure Module exists in the listOfValidModules
         newList.remove(task);
-        moduleWorkLoadDistribution.put(module,
-            moduleWorkLoadDistribution.get(module) - task.getWorkload().getWorkloadLevel());
+        deleteTaskInternal(module, newList);
+        decreaseCorrectWorkloadDistribution(module, task);
+        setExistingModuleList();
+        setModulePieChartData();
+    }
+
+    private static void deleteTaskInternal(Module module, List<Task> newList) {
         if (newList.isEmpty()) { //remove the module(key) from mapping if no task is associated with it
             mappingOfModulesToTasks.remove(module);
         } else {
             mappingOfModulesToTasks.put(module, newList);
         }
-        decreaseCorrectWorkloadDistribution(module, task);
-        setExistingModuleList();
-        setModulePieChartData();
     }
 
     /**
@@ -218,7 +227,7 @@ public class ModuleManager {
     }
 
     /**
-     * Fills the observable list of existringModules with the keySet of the mapping.
+     * Fills the observable list of existingModules with the keySet of the mapping.
      */
     public static void setExistingModuleList() {
         List<Module> existingModules = List.copyOf(mappingOfModulesToTasks.keySet());
@@ -226,7 +235,7 @@ public class ModuleManager {
     }
 
     /**
-     * Fills the observable list of existringModules with the keySet of the mapping.
+     * Fills the observable list of existingModules with the keySet of the mapping.
      */
     public static void setModulePieChartData() {
         modulePieChartData.clear();
