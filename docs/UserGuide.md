@@ -343,11 +343,11 @@ Examples:
 
 ### Sort tasks : `sort`
 
-Sorts the list of all tasks by workload/deadline/module. If no prefix is supplied, the tasks will be sorted by deadline.
+Sorts the list of all tasks by workload/deadline/module/tags/name/done status etc. If no prefix is supplied, the tasks will be sorted by deadline.
 
 Application: Used to group and prioritise tasks based on a certain criteria.
 
-Format:  `sort n/` or `sort d/` or `sort m/` or `sort w/` or `sort b/` or `sort t/` 
+Format:  `sort n/` or `sort d/` or `sort m/` or `sort w/` or `sort b/` or `sort t/` or `sort n/`
 
 *  `sort n/` Sorts the tasks by name alphabetically in ascending order.
 *  `sort d/` Sorts the tasks by description alphabetically in ascending order.
@@ -355,6 +355,7 @@ Format:  `sort n/` or `sort d/` or `sort m/` or `sort w/` or `sort b/` or `sort 
 *  `sort b/` Sorts the tasks by deadline so that a task with a closer deadline is positioned at the top of the list.
 *  `sort m/` Sorts the tasks by module code alphabetically in descending order.
 *  `sort t/` Sorts the tasks by number of tags in descending order.
+*  `sort n/` Sorts the tasks by done status. Done tasks are pushed towards the end of the list.
 
 ![add message](images/sortCommand.png)
 
@@ -441,5 +442,5 @@ Action | Format, Examples
 **mod** | `mod MODULE`<br> e.g. `mod CS2103T`
 **edit** | `edit INDEX [d/DESCRIPTION] [b/DEADLINE]…​`<br> e.g. `edit 2 d/Eat Biscuits b/2021-03-21 10:10`
 **recur** | `recur INDEX r/RECURRENCE`<br> e.g. `recur 1 r/monthly`
-**sort** | `sort n/` or `sort d/` or `sort m/` or `sort w/` or `sort b/` or `sort t/` <br> e.g. `sort b/`
+**sort** | `sort n/` or `sort d/` or `sort m/` or `sort w/` or `sort b/` or `sort t/` or `sort s/` <br> e.g. `sort b/`
 **exit** | `exit`
